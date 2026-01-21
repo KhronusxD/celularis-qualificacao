@@ -26,6 +26,7 @@ export interface Answers {
   docStatus: DocStatus | null;
   tradeIn: TradeInStatus | null;
   whatsapp: string;
+  name?: string;
 }
 
 export interface StepProps {

@@ -1,74 +1,82 @@
 import React, { useState } from 'react';
 import { StepProps } from '../../types';
-import { MessageCircle, ArrowRight } from 'lucide-react';
 
 export const WhatsappStep: React.FC<StepProps> = ({ onNext }) => {
-  const [phone, setPhone] = useState('');
-  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const formatPhone = (value: string) => {
-    // Basic Brazil Phone Mask
-    let v = value.replace(/\D/g, "");
-    if (v.length > 11) v = v.slice(0, 11);
-    
-    if (v.length > 2) {
-      if (v.length > 7) {
-        return `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
-      }
-      return `(${v.slice(0, 2)}) ${v.slice(2)}`;
-    }
-    return v;
-  };
+  // SUA URL DO GOOGLE APPS SCRIPT
+  const scriptURL = 'https://script.google.com/macros/s/AKfycby4lB4HpP6YV0WFwNOvgxjAF983YWngehV_pJwDnGicIo6n_co-YBfM5cuwWjWLa_0ECw/exec';
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(formatPhone(e.target.value));
-    if (error) setError('');
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (phone.length < 14) { // (XX) XXXXX-XXXX
-      setError('Por favor, digite um número válido com DDD.');
-      return;
-    }
-    onNext({ whatsapp: phone });
+    const form = e.currentTarget;
+
+    // 1. Feedback visual
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    // 2. Envia os dados para o Google Sheets
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+      .then(response => {
+        console.log('Sucesso!', response);
+        // 3. REDIRECIONAMENTO APÓS SUCESSO
+        // Em vez de redirecionar para uma página estática 'sucesso.html',
+        // avançamos para o próximo passo do App (ResultStep)
+        const formData = new FormData(form);
+        onNext({
+          whatsapp: formData.get('Whatsapp') as string,
+          name: formData.get('Nome') as string
+        });
+      })
+      .catch(error => {
+        console.error('Erro!', error.message);
+        setErrorMessage('Erro ao enviar. Tente novamente.');
+        setIsSubmitting(false);
+      });
   };
 
   return (
-    <div className="flex-1 p-6 flex flex-col animate-in fade-in slide-in-from-right-8 duration-300">
-      <div className="mb-6">
-        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4 text-green-600">
-          <MessageCircle size={24} />
-        </div>
-        <h2 className="text-2xl font-bold text-slate-800 mb-2">Tudo certo até aqui.</h2>
-        <p className="text-slate-500">Digite seu WhatsApp para receber o resultado da sua elegibilidade.</p>
+    <div className="flex-1 w-full animate-in fade-in slide-in-from-right-8 duration-300">
+      <style>{`
+        .form-container { max-width: 400px; margin: 0 auto; text-align: left; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; color: #333; }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
+        #btn-enviar { width: 100%; padding: 15px; background-color: #00C853; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        #btn-enviar:hover { background-color: #009624; }
+        #btn-enviar:disabled { opacity: 0.7; cursor: not-allowed; }
+        .security-note { font-size: 12px; color: #666; text-align: center; margin-top: 10px; }
+      `}</style>
+
+      <div className="form-container p-4">
+        <h3 className="text-xl font-bold mb-4 text-center">Verificar Disponibilidade Agora</h3>
+
+        <form name="submit-to-google-sheet" onSubmit={handleSubmit}>
+
+          <div className="input-group">
+            <label>Seu Nome Completo</label>
+            <input type="text" name="Nome" placeholder="Digite seu nome" required />
+          </div>
+
+          <div className="input-group">
+            <label>WhatsApp (com DDD)</label>
+            <input type="tel" name="Whatsapp" placeholder="(92) 9xxxx-xxxx" required />
+          </div>
+
+          <input type="hidden" name="Resultado" value="Pré-Aprovado (Elegível)" />
+
+          <button type="submit" id="btn-enviar" disabled={isSubmitting}>
+            {isSubmitting ? 'Processando... ⏳' : 'CONFIRMAR AGENDAMENTO'}
+          </button>
+
+          {errorMessage && (
+            <p className="text-center text-red-500 mt-2 font-medium">{errorMessage}</p>
+          )}
+
+          <p className="security-note">🔒 Seus dados estão seguros e não serão compartilhados.</p>
+        </form>
       </div>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-2">
-        <div>
-          <label htmlFor="whatsapp" className="block text-sm font-medium text-slate-700 mb-1">
-            Seu WhatsApp
-          </label>
-          <input
-            type="tel"
-            id="whatsapp"
-            value={phone}
-            onChange={handleChange}
-            placeholder="(11) 99999-9999"
-            className="w-full p-4 text-lg border-2 border-slate-200 rounded-xl focus:border-brand-green focus:ring-4 focus:ring-green-100 outline-none transition-all placeholder:text-slate-300"
-            inputMode="numeric"
-          />
-          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-        </div>
-
-        <button 
-          type="submit"
-          className="w-full bg-brand-green hover:bg-brand-darkGreen text-white font-bold text-lg p-4 rounded-xl shadow-lg shadow-brand-green/30 flex items-center justify-center gap-2 transition-all active:scale-[0.98] mt-4"
-        >
-          Ver meu Resultado
-          <ArrowRight size={20} />
-        </button>
-      </form>
     </div>
   );
 };
