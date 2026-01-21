@@ -1,0 +1,5 @@
+{
+  "name": "Celularis - Verificador de Elegibilidade",
+  "description": "Funil de pré-qualificação para financiamento de celulares via PayJoy. Verificação de elegibilidade rápida e mobile-first.",
+  "requestFramePermissions": []
+}
