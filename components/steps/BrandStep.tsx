@@ -24,19 +24,19 @@ export const BrandStep: React.FC<StepProps> = ({ onNext }) => {
 
             <div className="flex flex-col gap-3">
                 <ButtonOption
-                    label="Samsung (Galaxy A, S, M)"
+                    label="Samsung (Galaxy A)"
                     onClick={() => handleSelect(Brand.SAMSUNG)}
                     isSelected={selected === Brand.SAMSUNG}
                 />
                 <ButtonOption
-                    label="Motorola (Moto G, Edge)"
+                    label="Motorola (Moto G)"
                     onClick={() => handleSelect(Brand.MOTOROLA)}
                     isSelected={selected === Brand.MOTOROLA}
                 />
                 <ButtonOption
-                    label="Xiaomi (Redmi, Poco)"
-                    onClick={() => handleSelect(Brand.XIAOMI)}
-                    isSelected={selected === Brand.XIAOMI}
+                    label="Realme"
+                    onClick={() => handleSelect(Brand.REALME)}
+                    isSelected={selected === Brand.REALME}
                 />
                 <ButtonOption
                     label="Ainda estou decidindo"

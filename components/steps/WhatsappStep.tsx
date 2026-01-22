@@ -12,7 +12,7 @@ export const WhatsappStep: React.FC<StepProps> = ({ onNext, answers }) => {
     switch (val) {
       case Brand.SAMSUNG: return 'Samsung';
       case Brand.MOTOROLA: return 'Motorola';
-      case Brand.XIAOMI: return 'Xiaomi';
+      case Brand.REALME: return 'Realme';
       case Brand.DECIDING: return 'Indeciso';
       default: return '';
     }

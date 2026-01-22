@@ -1,7 +1,7 @@
 export enum Brand {
   SAMSUNG = 'SAMSUNG',
   MOTOROLA = 'MOTOROLA',
-  XIAOMI = 'XIAOMI',
+  REALME = 'REALME',
   DECIDING = 'DECIDING'
 }
 
