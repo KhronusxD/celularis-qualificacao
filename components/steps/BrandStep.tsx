@@ -20,7 +20,6 @@ export const BrandStep: React.FC<StepProps> = ({ onNext }) => {
                     <Smartphone size={24} />
                 </div>
                 <h2 className="text-2xl font-bold text-slate-800 mb-2">Qual marca de celular você está buscando hoje?</h2>
-                <p className="text-slate-500">Engajar com o sonho.</p>
             </div>
 
             <div className="flex flex-col gap-3">

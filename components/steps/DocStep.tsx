@@ -20,7 +20,6 @@ export const DocStep: React.FC<StepProps> = ({ onNext }) => {
           <FileText size={24} />
         </div>
         <h2 className="text-2xl font-bold text-slate-800 mb-2">Para finalizar a análise: Como está a situação do seu documento (RG ou CNH)?</h2>
-        <p className="text-slate-500">O filtro técnico obrigatório.</p>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -35,12 +34,12 @@ export const DocStep: React.FC<StepProps> = ({ onNext }) => {
           isSelected={selected === DocStatus.DIGITAL}
         />
         <ButtonOption
-          label="Tenho apenas foto/xerox (Alerta Amarelo)"
+          label="Tenho apenas foto/xerox"
           onClick={() => handleSelect(DocStatus.PHOTO_COPY)}
           isSelected={selected === DocStatus.PHOTO_COPY}
         />
         <ButtonOption
-          label="Não tenho documento/Está vencido (Alerta Vermelho)"
+          label="Não tenho documento/Está vencido"
           onClick={() => handleSelect(DocStatus.NONE)}
           isSelected={selected === DocStatus.NONE}
         />

@@ -31,7 +31,10 @@ export const ResultStep: React.FC<ResultStepProps> = ({ type }) => {
           </p>
         </div>
 
-        <button className="w-full bg-brand-green hover:bg-brand-darkGreen text-white font-bold text-lg p-4 rounded-xl shadow-lg shadow-brand-green/30 flex items-center justify-center gap-2 transition-all active:scale-[0.98] mb-4">
+        <button
+          onClick={() => window.location.href = `https://wa.me/5569993711497?text=${encodeURIComponent("Fiz o teste e estou pré-qualificado(a). Quero agendar a visita na loja para...")}`}
+          className="w-full bg-brand-green hover:bg-brand-darkGreen text-white font-bold text-lg p-4 rounded-xl shadow-lg shadow-brand-green/30 flex items-center justify-center gap-2 transition-all active:scale-[0.98] mb-4"
+        >
           <Calendar size={20} />
           AGENDAR ANÁLISE EXPRESSA
         </button>
