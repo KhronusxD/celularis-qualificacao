@@ -7,7 +7,7 @@ interface ResultStepProps {
 }
 
 export const ResultStep: React.FC<ResultStepProps> = ({ type }) => {
-  
+
   if (type === ResultType.ELIGIBLE) {
     // CENÁRIO A: SUCESSO
     return (
@@ -15,13 +15,13 @@ export const ResultStep: React.FC<ResultStepProps> = ({ type }) => {
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6 text-brand-green shadow-lg shadow-green-100">
           <CheckCircle2 size={48} strokeWidth={2.5} />
         </div>
-        
+
         <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-3">
           Perfil Elegível para Análise PayJoy!
         </h2>
-        
+
         <p className="text-center text-slate-600 mb-6 leading-relaxed">
-          Ótima notícia! Você cumpre todos os requisitos obrigatórios de documentação e idade. Suas chances de aprovação na loja são muito altas.
+          Ótima notícia! Você cumpre todos os requisitos obrigatórios de documentação. Suas chances de aprovação na loja são muito altas.
         </p>
 
         <div className="w-full bg-green-50 border border-green-100 rounded-xl p-4 mb-6">
@@ -51,11 +51,11 @@ export const ResultStep: React.FC<ResultStepProps> = ({ type }) => {
         <div className="w-20 h-20 bg-brand-yellow/10 rounded-full flex items-center justify-center mb-6 text-brand-yellow shadow-lg shadow-yellow-100">
           <AlertTriangle size={48} strokeWidth={2.5} />
         </div>
-        
+
         <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-3">
           Cuidado: Risco de Bloqueio
         </h2>
-        
+
         <p className="text-center text-slate-600 mb-6 leading-relaxed">
           Cópias ou documentos ilegíveis geralmente são recusados pelo sistema. Recomendamos que você procure o documento original antes de vir, para não perder a viagem.
         </p>
@@ -65,7 +65,7 @@ export const ResultStep: React.FC<ResultStepProps> = ({ type }) => {
             <CheckCircle2 size={20} />
             Tenho o original, quero tentar
           </button>
-          
+
           <button className="w-full bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-lg p-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
             <MessageCircle size={20} />
             Falar com especialista
@@ -81,13 +81,13 @@ export const ResultStep: React.FC<ResultStepProps> = ({ type }) => {
       <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-6 text-slate-500">
         <AlertTriangle size={48} strokeWidth={2.5} />
       </div>
-      
+
       <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-3">
         Atenção: Requisitos Pendentes
       </h2>
-      
+
       <p className="text-center text-slate-600 mb-6 leading-relaxed">
-        O sistema PayJoy exige obrigatoriamente ser maior de 18 anos e portar documento original. Sem isso, o sistema não libera a venda.
+        O sistema PayJoy exige obrigatoriamente portar documento original. Sem isso, o sistema não libera a venda.
       </p>
 
       <div className="w-full bg-slate-100 border border-slate-200 rounded-xl p-4 mb-6">

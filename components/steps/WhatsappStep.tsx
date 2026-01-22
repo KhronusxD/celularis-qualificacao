@@ -1,12 +1,62 @@
 import React, { useState } from 'react';
-import { StepProps } from '../../types';
+import { StepProps, Brand, EntryVal, Usage, Timeframe, DocStatus } from '../../types';
 
-export const WhatsappStep: React.FC<StepProps> = ({ onNext }) => {
+export const WhatsappStep: React.FC<StepProps> = ({ onNext, answers }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   // SUA URL DO GOOGLE APPS SCRIPT
   const scriptURL = 'https://script.google.com/macros/s/AKfycby4lB4HpP6YV0WFwNOvgxjAF983YWngehV_pJwDnGicIo6n_co-YBfM5cuwWjWLa_0ECw/exec';
+
+  const formatBrand = (val?: Brand | null) => {
+    switch (val) {
+      case Brand.SAMSUNG: return 'Samsung';
+      case Brand.MOTOROLA: return 'Motorola';
+      case Brand.XIAOMI: return 'Xiaomi';
+      case Brand.DECIDING: return 'Indeciso';
+      default: return '';
+    }
+  };
+
+  const formatEntry = (val?: EntryVal | null) => {
+    switch (val) {
+      case EntryVal.RANGE_150_300: return 'R$ 150 - R$ 300';
+      case EntryVal.RANGE_300_600: return 'R$ 300 - R$ 600';
+      case EntryVal.ABOVE_600: return 'Acima de R$ 600';
+      case EntryVal.INSTALLMENTS: return 'Parcelar Entrada';
+      default: return '';
+    }
+  };
+
+  const formatUsage = (val?: Usage | null) => {
+    switch (val) {
+      case Usage.WORK: return 'Trabalho';
+      case Usage.SOCIAL: return 'Redes Sociais';
+      case Usage.GAMES: return 'Jogos';
+      case Usage.BASIC: return 'Uso Básico';
+      default: return '';
+    }
+  };
+
+  const formatTimeframe = (val?: Timeframe | null) => {
+    switch (val) {
+      case Timeframe.TODAY: return 'Hoje';
+      case Timeframe.TOMORROW: return 'Amanhã';
+      case Timeframe.THIS_WEEK: return 'Esta Semana';
+      case Timeframe.RESEARCHING: return 'Só Pesquisando';
+      default: return '';
+    }
+  };
+
+  const formatDoc = (val?: DocStatus | null) => {
+    switch (val) {
+      case DocStatus.ORIGINAL: return 'Original em Mãos';
+      case DocStatus.DIGITAL: return 'Digital Oficial';
+      case DocStatus.PHOTO_COPY: return 'Foto/Xerox';
+      case DocStatus.NONE: return 'Sem Documento';
+      default: return '';
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,8 +71,6 @@ export const WhatsappStep: React.FC<StepProps> = ({ onNext }) => {
       .then(response => {
         console.log('Sucesso!', response);
         // 3. REDIRECIONAMENTO APÓS SUCESSO
-        // Em vez de redirecionar para uma página estática 'sucesso.html',
-        // avançamos para o próximo passo do App (ResultStep)
         const formData = new FormData(form);
         onNext({
           whatsapp: formData.get('Whatsapp') as string,
@@ -63,6 +111,13 @@ export const WhatsappStep: React.FC<StepProps> = ({ onNext }) => {
             <label>WhatsApp (com DDD)</label>
             <input type="tel" name="Whatsapp" placeholder="(92) 9xxxx-xxxx" required />
           </div>
+
+          {/* Hidden Fields for Spreadsheet */}
+          <input type="hidden" name="Marca" value={formatBrand(answers?.brand)} />
+          <input type="hidden" name="Entrada" value={formatEntry(answers?.entryVal)} />
+          <input type="hidden" name="Uso" value={formatUsage(answers?.usage)} />
+          <input type="hidden" name="Urgencia" value={formatTimeframe(answers?.timeframe)} />
+          <input type="hidden" name="Documento" value={formatDoc(answers?.docStatus)} />
 
           <input type="hidden" name="Resultado" value="Pré-Aprovado (Elegível)" />
 

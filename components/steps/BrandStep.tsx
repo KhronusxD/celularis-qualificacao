@@ -1,0 +1,50 @@
+import React, { useState } from 'react';
+import { Brand, StepProps } from '../../types';
+import { ButtonOption } from '../ButtonOption';
+import { Smartphone } from 'lucide-react';
+
+export const BrandStep: React.FC<StepProps> = ({ onNext }) => {
+    const [selected, setSelected] = useState<Brand | null>(null);
+
+    const handleSelect = (value: Brand) => {
+        setSelected(value);
+        setTimeout(() => {
+            onNext({ brand: value });
+        }, 400);
+    };
+
+    return (
+        <div className="flex-1 p-6 flex flex-col animate-in fade-in slide-in-from-right-8 duration-300">
+            <div className="mb-6">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 text-blue-600">
+                    <Smartphone size={24} />
+                </div>
+                <h2 className="text-2xl font-bold text-slate-800 mb-2">Qual marca de celular você está buscando hoje?</h2>
+                <p className="text-slate-500">Engajar com o sonho.</p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+                <ButtonOption
+                    label="Samsung (Galaxy A, S, M)"
+                    onClick={() => handleSelect(Brand.SAMSUNG)}
+                    isSelected={selected === Brand.SAMSUNG}
+                />
+                <ButtonOption
+                    label="Motorola (Moto G, Edge)"
+                    onClick={() => handleSelect(Brand.MOTOROLA)}
+                    isSelected={selected === Brand.MOTOROLA}
+                />
+                <ButtonOption
+                    label="Xiaomi (Redmi, Poco)"
+                    onClick={() => handleSelect(Brand.XIAOMI)}
+                    isSelected={selected === Brand.XIAOMI}
+                />
+                <ButtonOption
+                    label="Ainda estou decidindo"
+                    onClick={() => handleSelect(Brand.DECIDING)}
+                    isSelected={selected === Brand.DECIDING}
+                />
+            </div>
+        </div>
+    );
+};

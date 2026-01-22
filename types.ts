@@ -1,18 +1,36 @@
-export enum AgeGroup {
-  UNDER_18 = 'UNDER_18',
-  ADULT = 'ADULT', // 18-65
-  SENIOR = 'SENIOR' // > 65
+export enum Brand {
+  SAMSUNG = 'SAMSUNG',
+  MOTOROLA = 'MOTOROLA',
+  XIAOMI = 'XIAOMI',
+  DECIDING = 'DECIDING'
+}
+
+export enum EntryVal {
+  RANGE_150_300 = 'RANGE_150_300',
+  RANGE_300_600 = 'RANGE_300_600',
+  ABOVE_600 = 'ABOVE_600',
+  INSTALLMENTS = 'INSTALLMENTS'
+}
+
+export enum Usage {
+  WORK = 'WORK',
+  SOCIAL = 'SOCIAL',
+  GAMES = 'GAMES',
+  BASIC = 'BASIC'
+}
+
+export enum Timeframe {
+  TODAY = 'TODAY',
+  TOMORROW = 'TOMORROW',
+  THIS_WEEK = 'THIS_WEEK',
+  RESEARCHING = 'RESEARCHING'
 }
 
 export enum DocStatus {
   ORIGINAL = 'ORIGINAL',
-  COPY_EXPIRED = 'COPY_EXPIRED',
+  DIGITAL = 'DIGITAL',
+  PHOTO_COPY = 'PHOTO_COPY',
   NONE = 'NONE'
-}
-
-export enum TradeInStatus {
-  HAS_DEVICE = 'HAS_DEVICE',
-  CASH = 'CASH'
 }
 
 export enum ResultType {
@@ -22,9 +40,11 @@ export enum ResultType {
 }
 
 export interface Answers {
-  ageGroup: AgeGroup | null;
+  brand: Brand | null;
+  entryVal: EntryVal | null;
+  usage: Usage | null;
+  timeframe: Timeframe | null;
   docStatus: DocStatus | null;
-  tradeIn: TradeInStatus | null;
   whatsapp: string;
   name?: string;
 }
@@ -32,4 +52,5 @@ export interface Answers {
 export interface StepProps {
   onNext: (data: Partial<Answers>) => void;
   isTransitioning?: boolean;
+  answers?: Answers;
 }
